@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import LOGO from '../assets/logo.jpg';
 import MENU from '../assets/menu.svg';
@@ -15,18 +15,39 @@ const inactiveStyle = {
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [signIn, setSignIn] = useState(true);
+  const [signIn, setSignIn] = useState(false);
   const [createAccount, setCreateAccount] = useState(false);
-  // create an acount modal
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+
+  // Check if user is already logged in on component mount
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    console.log(authToken);
+    if (authToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = (token) => {
+    localStorage.setItem('authToken', token); // Store token in localStorage
+    setIsLoggedIn(true); // Update login state
+    toggleSignInModal(); // Close the login modal
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // Remove token from localStorage
+    setIsLoggedIn(false); // Update login state
+    // Additional logout logic (e.g., redirect, clear user state)
+  };
+
   const toggleSignUpModal = () => {
     setCreateAccount(!createAccount);
-    console.log(createAccount);
   };
-  // menu for mobile screen
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  // for sign in modal
+
   const toggleSignInModal = () => {
     setSignIn(!signIn);
   };
@@ -42,9 +63,27 @@ const Navbar = () => {
           </NavLink>
 
           {/* Get Started Button - Visible in Desktop */}
-          <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <button type="button" onClick={toggleSignInModal} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-          </div>
+          {!isLoggedIn ? (
+            <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+              <button
+                type="button"
+                onClick={toggleSignInModal}
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                Login
+              </button>
+            </div>
+          ) : (
+            <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              >
+                Logout
+              </button>
+            </div>
+          )}
 
           {/* Toggle Button for Mobile Menu */}
           <button
@@ -54,40 +93,79 @@ const Navbar = () => {
             aria-controls="navbar-cta"
             aria-expanded={isMobileMenuOpen ? 'true' : 'false'}
           >
-            <img src={MENU} />
+            <img src={MENU} alt="Menu" />
           </button>
 
           {/* Menu Items - Mobile */}
-          <div className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMobileMenuOpen ? 'block' : 'hidden'}`} id="navbar-cta">
+          <div
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
+              isMobileMenuOpen ? 'block' : 'hidden'
+            }`}
+            id="navbar-cta"
+          >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <NavLink to="/" className="block py-2 px-3 md:p-0 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500" aria-current="page" style={activeStyle}>Home</NavLink>
+                <NavLink
+                  to="/"
+                  className="block py-2 px-3 md:p-0 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
+                  aria-current="page"
+                  style={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+                >
+                  Home
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/demo" className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700" style={inactiveStyle}>Demo</NavLink>
+                <NavLink
+                  to="/demo"
+                  className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700"
+                  style={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+                >
+                  Demo
+                </NavLink>
               </li>
               {/* Add more NavLink items as needed */}
             </ul>
 
             {/* Get Started Button - Mobile */}
-            <div className="md:hidden mt-4">
-              <button type="button" onClick={toggleSignInModal} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login</button>
-            </div>
+            {!isLoggedIn ? (
+              <div className="md:hidden mt-4">
+                <button
+                  type="button"
+                  onClick={toggleSignInModal}
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Login
+                </button>
+              </div>
+            ):(
+              <div className="md:hidden mt-4">
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                 >
+                  LogOut
+                </button>
+              </div>
+            )
+            }
           </div>
         </div>
       </nav>
+
+      {/* Login Modal */}
       {signIn && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
-          <LoginModel toggleSignInModal={toggleSignInModal}  toggleSignUpModal={toggleSignUpModal}/>
+          <LoginModel handleLogin={handleLogin} toggleSignInModal={toggleSignInModal} toggleSignUpModal={toggleSignUpModal} />
         </div>
       )}
 
-      {createAccount &&  (
-       <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center"> 
-        <SignUpModal toggleSignUpModal={toggleSignUpModal}/>
-       </div>  
-      )
-      }
+      {/* Sign Up Modal */}
+      {createAccount && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
+          <SignUpModal toggleSignUpModal={toggleSignUpModal} />
+        </div>
+      )}
     </>
   );
 };
