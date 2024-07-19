@@ -22,7 +22,7 @@ const Navbar = () => {
   // Check if user is already logged in on component mount
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
-    console.log(authToken);
+    // console.log(authToken);
     if (authToken) {
       setIsLoggedIn(true);
     }
@@ -120,9 +120,10 @@ const Navbar = () => {
                   className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700"
                   style={({ isActive }) => isActive ? activeStyle : inactiveStyle}
                 >
-                  Demo
+                  Charts
                 </NavLink>
               </li>
+              
               {/* Add more NavLink items as needed */}
             </ul>
 
