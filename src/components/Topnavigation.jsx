@@ -55,7 +55,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
+        <div className="w-full  flex flex-wrap items-center justify-between mx-auto p-2 px-4">
           {/* Logo and Brand Name */}
           <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src={LOGO} className="h-8 w-8 border-solid rounded-full" alt="QuakeAlert Logo" />
