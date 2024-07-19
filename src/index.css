@@ -9,4 +9,7 @@
   .modal-overlay {
     z-index: 1000; /* Ensure high z-index for the modal overlay */
   }
-  
+  .chart-container {
+    width: 100%;  /* Full width */
+    height: 400px; /* Adjust height as needed */
+  }  
