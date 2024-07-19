@@ -1,6 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import HeatmapLayerComponent from './HeatmapLayerComponent';
+import { fetchEarthquakeData } from '../services/earthquakeApi';
+import 'leaflet.heat';
 
 // Fixing marker icon issue
 delete L.Icon.Default.prototype._getIconUrl;
@@ -11,30 +14,48 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
+const LocationUpdater = ({ location }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (location) {
+      map.flyTo([location.lat, location.lng], 13, {
+        duration: 1.5, // Duration in seconds
+      });
+    }
+  }, [location, map]);
+
+  return null;
+};
+
 const MapScreen = ({ location }) => {
+  const [points, setPoints] = useState([]);
+  const [error, setError] = useState(null);
   const mapRef = useRef();
 
-  const LocationUpdater = ({ location }) => {
-    const map = useMap();
-
-    useEffect(() => {
-      if (location) {
-        map.flyTo([location.lat, location.lng], 7, {
-          duration: 1.5, // Duration in seconds
-        });
+  useEffect(() => {
+    const getEarthquakeData = async () => {
+      try {
+        const earthquakeData = await fetchEarthquakeData();
+        setPoints(earthquakeData);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
       }
-    }, [location, map]);
+    };
+    getEarthquakeData();
+  }, []);
 
-    return null;
-  };
-
-  const defaultPosition = [51.505, -0.09];
+  const defaultPosition = [20, 0]; // Centered on the world
+  const maxZoom = 15; // Set your desired maximum zoom level here
 
   return (
     <>
       <MapContainer
+        className='map-container'
         center={defaultPosition}
         zoom={2}
+        maxZoom={maxZoom} // Restrict maximum zoom level
         style={{ height: '100vh', width: '100%' }}
         whenCreated={mapInstance => mapRef.current = mapInstance}
       >
@@ -49,6 +70,8 @@ const MapScreen = ({ location }) => {
             </Popup>
           </Marker>
         )}
+        {error && <p className="text-red-500">{error}</p>}
+        <HeatmapLayerComponent points={points} />
         <LocationUpdater location={location} />
       </MapContainer>
     </>

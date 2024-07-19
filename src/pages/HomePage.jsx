@@ -1,3 +1,4 @@
+// pages/HomePage.jsx
 import React, { useState } from 'react';
 import { fetchCoordinates } from '../services/api'; // Adjust the path as needed
 import 'leaflet/dist/leaflet.css';
