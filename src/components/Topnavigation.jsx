@@ -22,7 +22,6 @@ const Navbar = () => {
   // Check if user is already logged in on component mount
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
-    console.log(authToken);
     if (authToken) {
       setIsLoggedIn(true);
     }
@@ -55,7 +54,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="w-full  flex flex-wrap items-center justify-between mx-auto p-2 px-4">
+        <div className="w-full flex flex-wrap items-center justify-between mx-auto p-2 px-4">
           {/* Logo and Brand Name */}
           <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img src={LOGO} className="h-8 w-8 border-solid rounded-full" alt="QuakeAlert Logo" />
@@ -109,7 +108,7 @@ const Navbar = () => {
                   to="/"
                   className="block py-2 px-3 md:p-0 rounded md:bg-transparent md:text-blue-700 md:dark:text-blue-500"
                   aria-current="page"
-                  style={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+                  style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
                 >
                   Home
                 </NavLink>
@@ -118,11 +117,12 @@ const Navbar = () => {
                 <NavLink
                   to="/demo"
                   className="block py-2 px-3 md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 md:dark:hover:bg-transparent dark:border-gray-700"
-                  style={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+                  style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
                 >
-                  Demo
+                  Charts
                 </NavLink>
               </li>
+
               {/* Add more NavLink items as needed */}
             </ul>
 
@@ -137,32 +137,31 @@ const Navbar = () => {
                   Login
                 </button>
               </div>
-            ):(
+            ) : (
               <div className="md:hidden mt-4">
                 <button
                   type="button"
                   onClick={handleLogout}
                   className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                 >
+                >
                   LogOut
                 </button>
               </div>
-            )
-            }
+            )}
           </div>
         </div>
       </nav>
 
       {/* Login Modal */}
       {signIn && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
           <LoginModel handleLogin={handleLogin} toggleSignInModal={toggleSignInModal} toggleSignUpModal={toggleSignUpModal} />
         </div>
       )}
 
       {/* Sign Up Modal */}
       {createAccount && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
           <SignUpModal toggleSignUpModal={toggleSignUpModal} />
         </div>
       )}
