@@ -44,7 +44,9 @@ const tabs = [
   },
 ];
 
-const HomeCharts = () => {
+
+const HomeCharts = ({earthquakeInfo,selectedLatLon,setRadius,setSelectedLatLon}) => {
+
   const [activeTab, setActiveTab] = useState('globe');
 
   const handleTabClick = (id) => {
@@ -54,7 +56,9 @@ const HomeCharts = () => {
   return (
     <div className="w-full flex flex-col h-full bg-gray-800 p-4">
       <TabNavigation tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />
-      <TabContent activeTab={activeTab} />
+
+      <TabContent activeTab={activeTab} earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} setSelectedLatLon={setSelectedLatLon}  setRadius={setRadius}/>
+
     </div>
   );
 };

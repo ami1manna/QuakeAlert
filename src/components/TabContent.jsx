@@ -1,12 +1,34 @@
 // components/TabContent.jsx
 import React from 'react';
-import GantChart from './GantChart';
 
-const TabContent = ({ activeTab }) => {
+import GanttChart from './GanttChart';
+const tasks = [
+  {
+    id: '1',
+    name: 'Task 1',
+    actualStart: '2024-07-01',
+    actualEnd: '2024-07-10',
+    progress: 75
+  },
+  {
+    id: '2',
+    name: 'Task 3',
+    actualStart: '2024-07-01',
+    actualEnd: '2024-07-10',
+    progress: 75
+  },
+  // Add more tasks here
+];
+
+const TabContent = ({ activeTab , earthquakeInfo,selectedLatLon,setRadius,setSelectedLatLon}) => {
+ 
   const renderContent = () => {
+    
     switch (activeTab) {
       case 'globe':
-        return <GantChart/>;
+        return <GanttChart earthquakeInfo={earthquakeInfo} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius}/>;
+
+
       case 'dashboard':
         return <div>Dashboard Content</div>;
       case 'settings':

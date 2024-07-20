@@ -9,7 +9,8 @@ const HeatmapLayerComponent = ({ points }) => {
 
   useEffect(() => {
     if (points.length > 0) {
-      // Create heatmap layer if it does not exist
+
+
       if (!heatmapLayerRef.current) {
         heatmapLayerRef.current = L.heatLayer(
           points.map(point => [point.lat, point.lng, point.intensity]),
@@ -29,16 +30,24 @@ const HeatmapLayerComponent = ({ points }) => {
         );
         heatmapLayerRef.current.addTo(map);
       } else {
-        // Update heatmap layer data
+
         heatmapLayerRef.current.setLatLngs(
           points.map(point => [point.lat, point.lng, point.intensity])
         );
       }
+
+    } else {
+      // Handle case where points is empty or invalid
+      if (heatmapLayerRef.current) {
+        map.removeLayer(heatmapLayerRef.current);
+      }
+
     }
   }, [points, map]);
 
   useMapEvent('movestart', () => {
-    // Disable the heatmap layer when the map starts moving
+
+
     if (heatmapLayerRef.current && layerVisible.current) {
       map.removeLayer(heatmapLayerRef.current);
       layerVisible.current = false;
@@ -46,7 +55,7 @@ const HeatmapLayerComponent = ({ points }) => {
   });
 
   useMapEvent('moveend', () => {
-    // Re-enable the heatmap layer when the map stops moving
+
     if (heatmapLayerRef.current && !layerVisible.current) {
       heatmapLayerRef.current.addTo(map);
       layerVisible.current = true;
