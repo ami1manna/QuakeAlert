@@ -37,6 +37,7 @@ const MapScreen = ({ location }) => {
     const getEarthquakeData = async () => {
       try {
         const earthquakeData = await fetchEarthquakeData();
+        // console.log(earthquakeData);
         setPoints(earthquakeData);
         setError(null);
       } catch (err) {

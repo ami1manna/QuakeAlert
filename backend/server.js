@@ -14,6 +14,7 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes);
 
+
 // MongoDB connection
 const MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI, {
@@ -23,5 +24,5 @@ mongoose.connect(MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log(err));
 
-// Server
+// Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
