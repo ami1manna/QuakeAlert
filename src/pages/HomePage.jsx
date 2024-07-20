@@ -1,15 +1,21 @@
+
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+
 import { fetchCoordinates } from "../services/api"; // Adjust the path as needed
 import "leaflet/dist/leaflet.css";
 import MapScreen from "../components/MapScreen";
 import ResiableSplitView from "../components/ResiableSplitView";
+
+import Home from "../components/Home";
+
 import HomeCharts from "../components/HomeCharts";
 
 const HomePage = () => {
   const [place, setPlace] = useState("");
   const [location, setLocation] = useState(null);
   const [error, setError] = useState("");
+
   const [selectedLatLon, setSelectedLatLon] = useState(null);
   const [earthquakeInfo, setEarthquakeInfo] = useState(null);
   const [radius, setRadius] = useState(10);
@@ -41,6 +47,7 @@ const HomePage = () => {
   }, [radius]);
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
     try {
       const coords = await fetchCoordinates(place);
@@ -51,6 +58,7 @@ const HomePage = () => {
       setLocation(null);
     }
   };
+
 
   useEffect(() => {
     if (selectedLatLon) {
@@ -66,20 +74,20 @@ const HomePage = () => {
             <label htmlFor="place" className="block mb-2 text-sm font-medium text-gray-900">
               Please Enter Place
             </label>
-            <input
-              type="text"
-              id="place"
-              value={place}
-              onChange={(e) => setPlace(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              placeholder="e.g., Mumbai"
-              required
-            />
+              <input
+                type="text"
+                id="place"
+                value={place}
+                onChange={e => setPlace(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="e.g., Mumbai"
+                required
+              />
           </div>
           <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-          >
+              type="submit"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+            >
             Search
           </button>
         </form>
@@ -96,6 +104,7 @@ const HomePage = () => {
         <HomeCharts earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius} />
       </ResiableSplitView>
     </div>
+
   );
 };
 

@@ -17,6 +17,7 @@ const geocodingRoutes = require('./routes/geocoding'); // Import geocoding route
 app.use('/auth', authRoutes);
 app.use('/geocoding', geocodingRoutes); // Use geocoding routes
 
+
 // MongoDB connection
 const MONGO_URI = process.env.MONGO_URI;
 mongoose.connect(MONGO_URI, {
