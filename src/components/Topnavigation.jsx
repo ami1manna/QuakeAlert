@@ -1,7 +1,11 @@
+// React Components
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+// images
 import LOGO from '../assets/logo.jpg';
 import MENU from '../assets/menu.svg';
+import PROFILE from '../assets/profile.png';
+// Components
 import LoginModel from './LoginModel';
 import SignUpModal from './SignUpModal';
 
@@ -18,20 +22,27 @@ const Navbar = () => {
   const [signIn, setSignIn] = useState(false);
   const [createAccount, setCreateAccount] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
-
+  const [userEmail, setUserEmail] = useState('');
+  
   // Check if user is already logged in on component mount
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
+    const userEmail = localStorage.getItem('userEmail');
     if (authToken) {
       setIsLoggedIn(true);
+      setUserEmail(userEmail);
     }
   }, []);
 
-  const handleLogin = (token) => {
+  const handleLogin = (token, userEmail) => {
+
     localStorage.setItem('authToken', token); // Store token in localStorage
+    localStorage.setItem('userEmail', userEmail);
+    
     setIsLoggedIn(true); // Update login state
     toggleSignInModal(); // Close the login modal
   };
+
 
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // Remove token from localStorage
@@ -56,12 +67,25 @@ const Navbar = () => {
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
         <div className="w-full flex flex-wrap items-center justify-between mx-auto p-2 px-4">
           {/* Logo and Brand Name */}
-          <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src={LOGO} className="h-8 w-8 border-solid rounded-full" alt="QuakeAlert Logo" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">QuakeAlert</span>
-          </NavLink>
+
+
+          <div className='flex justify-start items-center  cursor-pointer gap-2 p-2'>
+            <NavLink to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+              <img src={LOGO} className="h-8 w-8 border-solid rounded-full" alt="QuakeAlert Logo" />
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">QuakeAlert</span>
+            </NavLink>
+            {isLoggedIn && (
+              <NavLink to={`/response/`} className={"flex justify-start items-center gap-2"}> 
+                <img src={PROFILE} className="h-8 w-8 ml-5 border-solid rounded-full" alt="Profile" />
+                <span className='text-white'> {userEmail} </span>
+              </NavLink>
+            )}
+
+
+          </div>
 
           {/* Get Started Button - Visible in Desktop */}
+
           {!isLoggedIn ? (
             <div className="hidden md:flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
               <button
@@ -97,9 +121,8 @@ const Navbar = () => {
 
           {/* Menu Items - Mobile */}
           <div
-            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
-              isMobileMenuOpen ? 'block' : 'hidden'
-            }`}
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMobileMenuOpen ? 'block' : 'hidden'
+              }`}
             id="navbar-cta"
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
