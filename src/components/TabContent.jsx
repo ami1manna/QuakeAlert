@@ -1,11 +1,12 @@
 // components/TabContent.jsx
 import React from 'react';
+import GantChart from './GantChart';
 
 const TabContent = ({ activeTab }) => {
   const renderContent = () => {
     switch (activeTab) {
-      case 'profile':
-        return <div>Profile Content</div>;
+      case 'globe':
+        return <GantChart/>;
       case 'dashboard':
         return <div>Dashboard Content</div>;
       case 'settings':
