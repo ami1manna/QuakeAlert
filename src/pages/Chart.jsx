@@ -11,10 +11,19 @@ const Chart = () => {
     console.log('maxY:');
   
     return (
-        <div className="w-screen h-screen flex justify-center items-center">
+        <>
+        
+        <div className='w-screen h-screen flex justify-between items-center'>
+        <div className="w-[60%]">
           {console.log('xAxisLabels')}
         <ChartComponent xAxisLabels={xAxisLabels} yAxisCounts={yAxisCounts} maxY={maxY} />
       </div>
+      <div className='flex-1 h-screen bg-slate-500'>
+
+        </div>
+
+      </div>
+        </>
     );
   };
  

@@ -12,7 +12,7 @@ const LoginModel = ({ toggleSignInModal, toggleSignUpModal, handleLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/auth/login', { email, password });
-      handleLogin(response.data.token); // Pass token to handleLogin function
+      handleLogin(response.data.token,response.data.result.email); // Pass token to handleLogin function
       toggleSignInModal(); // Close the login modal
     } catch (error) {
       console.error('Error logging in:', error.response.data);

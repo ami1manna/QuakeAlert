@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Root from './pages/Root';
 import  Chart  from './pages/Chart';
+import ResponsePage from './pages/ResponsePage';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,12 @@ const router = createBrowserRouter([
       {
         path: '/chart',
         element: <Chart/>
+      },
+      {
+        path: '/response',
+        element:<ResponsePage/>
       }
+      
     ]
   }
 ]);
