@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
+
 import L from 'leaflet';
 import HeatmapLayerComponent from './HeatmapLayerComponent';
 import { fetchEarthquakeData } from '../services/earthquakeApi';
@@ -28,6 +30,7 @@ const LocationUpdater = ({ location }) => {
   return null;
 };
 
+
 const ClickHandler = ({ onClick }) => {
   useMapEvents({
     click(event) {
@@ -39,6 +42,7 @@ const ClickHandler = ({ onClick }) => {
 };
 
 const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => {
+
   const [points, setPoints] = useState([]);
   const [error, setError] = useState(null);
   const mapRef = useRef();
@@ -47,6 +51,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
     const getEarthquakeData = async () => {
       try {
         const earthquakeData = await fetchEarthquakeData();
+
         setPoints(earthquakeData);
         setError(null);
       } catch (err) {
@@ -58,8 +63,10 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
 
   const defaultPosition = [20, 0]; // Centered on the world
   const maxZoom = 15; // Set your desired maximum zoom level here
+
   const minZoom = 2; // Restrict minimum zoom level here
   const bounds = [[-90, -180], [90, 180]]; // Set map boundaries
+
 
   return (
     <>
@@ -68,10 +75,12 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
         center={defaultPosition}
         zoom={2}
         maxZoom={maxZoom} // Restrict maximum zoom level
+
         minZoom={minZoom} // Restrict minimum zoom level
         maxBounds={bounds} // Set map boundaries
         maxBoundsViscosity={1.0} // Makes sure the map stays within the set bounds
         style={{ height: '100%', width: '100%' }}
+
         whenCreated={mapInstance => mapRef.current = mapInstance}
       >
         <TileLayer
@@ -85,6 +94,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
             </Popup>
           </Marker>
         )}
+
         {selectedLatLon && (
           <Marker position={[selectedLatLon.lat, selectedLatLon.lng]}>
             <Popup>
@@ -105,6 +115,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
         <HeatmapLayerComponent points={points} />
         <LocationUpdater location={location} />
         <ClickHandler onClick={onMapClick} />
+
       </MapContainer>
     </>
   );

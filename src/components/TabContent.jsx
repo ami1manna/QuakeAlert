@@ -1,5 +1,6 @@
 // components/TabContent.jsx
 import React from 'react';
+
 import GanttChart from './GanttChart';
 const tasks = [
   {
@@ -26,6 +27,8 @@ const TabContent = ({ activeTab , earthquakeInfo,selectedLatLon,setRadius,setSel
     switch (activeTab) {
       case 'globe':
         return <GanttChart earthquakeInfo={earthquakeInfo} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius}/>;
+
+
       case 'dashboard':
         return <div>Dashboard Content</div>;
       case 'settings':
