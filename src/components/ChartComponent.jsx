@@ -56,7 +56,7 @@ const ChartComponent = ({ xAxisLabels = [], yAxisCounts = [], maxY = 10 }) => {
   };
 
   return (
-    <div className="chart-container" style={{ width: '80%', height: '400px' }}>
+    <div style={{ width: '100%', height: '250px' }}>
       <Bar data={data} options={options} />
     </div>
   );
