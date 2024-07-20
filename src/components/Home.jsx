@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import axios from "axios";
 
@@ -5,6 +6,7 @@ function Home() {
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
   const [depth, setDepth] = useState("");
+  const [significance, setSignificance] = useState("");
   const [magnitude, setMagnitude] = useState(null);
 
   const handlePredict = async () => {
@@ -13,6 +15,7 @@ function Home() {
         longitude: parseFloat(longitude),
         latitude: parseFloat(latitude),
         depth: parseFloat(depth),
+        significance: parseFloat(significance),
       });
       setMagnitude(response.data.magnitude);
     } catch (error) {
@@ -52,6 +55,17 @@ function Home() {
             type="number"
             value={depth}
             onChange={e => setDepth(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </label>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700 text-sm font-bold mb-2">
+          Significance:
+          <input
+            type="number"
+            value={significance}
+            onChange={e => setSignificance(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </label>
