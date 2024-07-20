@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { fetchCoordinates } from "../services/api"; // Adjust the path as needed
 import "leaflet/dist/leaflet.css";
@@ -12,6 +12,33 @@ const HomePage = () => {
   const [error, setError] = useState("");
   const [selectedLatLon, setSelectedLatLon] = useState(null);
   const [earthquakeInfo, setEarthquakeInfo] = useState(null);
+  const [radius, setRadius] = useState(10);
+
+  // Debounce function to limit API calls
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  const handleMapClick = useCallback(async (latlng) => {
+    setSelectedLatLon(latlng);
+    try {
+      const response = await axios.get(`http://localhost:5000/geocoding`, {
+        params: {
+          lat: latlng.lat,
+          lng: latlng.lng,
+          radius: radius,
+        },
+      });
+      setEarthquakeInfo(response.data);
+    } catch (err) {
+      setError(err.message);
+      setEarthquakeInfo(null);
+    }
+  }, [radius]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,20 +52,11 @@ const HomePage = () => {
     }
   };
 
-  const handleMapClick = async (latlng) => {
-    setSelectedLatLon(latlng);
-    console.log(selectedLatLon);
-    
-    try {
-      const response = await fetch(`http://localhost:5000/geocoding?lat=${latlng.lat}&lng=${latlng.lng}`);
-      const data = await response.json();
-      setEarthquakeInfo(data);
-      console.log(earthquakeInfo);
-    } catch (err) {
-      setError(err.message);
-      setEarthquakeInfo(null);
+  useEffect(() => {
+    if (selectedLatLon) {
+      handleMapClick(selectedLatLon); // Fetch data initially if there is a selected location
     }
-  };
+  }, [selectedLatLon, radius, handleMapClick]);
 
   return (
     <div className="w-screen h-screen flex">
@@ -75,7 +93,7 @@ const HomePage = () => {
           earthquakeInfo={earthquakeInfo}
           onMapClick={handleMapClick}
         />
-        <HomeCharts earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} />
+        <HomeCharts earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius} />
       </ResiableSplitView>
     </div>
   );

@@ -19,13 +19,13 @@ const tasks = [
   // Add more tasks here
 ];
 
-const TabContent = ({ activeTab , earthquakeInfo,selectedLatLon}) => {
+const TabContent = ({ activeTab , earthquakeInfo,selectedLatLon,setRadius,setSelectedLatLon}) => {
  
   const renderContent = () => {
     
     switch (activeTab) {
       case 'globe':
-        return <GanttChart tasks={tasks} earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon}/>;
+        return <GanttChart earthquakeInfo={earthquakeInfo} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius}/>;
       case 'dashboard':
         return <div>Dashboard Content</div>;
       case 'settings':

@@ -26,7 +26,7 @@ const ResiableSplitView = ({ direction = "vertical" ,children}) => {
           </div>
         </ResizableBox>
         <div
-          className="bg-slate-800 text-white flex items-center justify-center"
+          className="bg-slate-800 text-white flex items-center justify-center overflow-auto"
           style={{ height: `calc(100% - ${size}px)` }}
         >
           {children[1]}
