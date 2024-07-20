@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import { fetchCoordinates } from '../services/api'; // Adjust the path as needed
-import 'leaflet/dist/leaflet.css';
-import MapScreen from '../components/MapScreen';
-import ResiableSplitView from '../components/ResiableSplitView';
-import HomeCharts from '../components/HomeCharts';
+import React, { useState } from "react";
+import { fetchCoordinates } from "../services/api"; // Adjust the path as needed
+import "leaflet/dist/leaflet.css";
+import MapScreen from "../components/MapScreen";
+import ResiableSplitView from "../components/ResiableSplitView";
+import Home from "../components/Home";
+import HomeCharts from "../components/HomeCharts";
 
 const HomePage = () => {
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState("");
   const [location, setLocation] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     try {
       const coords = await fetchCoordinates(place);
       setLocation(coords);
-      setError('');
+      setError("");
     } catch (err) {
       setError(err.message);
       setLocation(null);
@@ -28,17 +29,14 @@ const HomePage = () => {
         <div className="h-full w-1/6 bg-black p-4">
           <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
             <div className="mb-5">
-              <label
-                htmlFor="place"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
+              <label htmlFor="place" className="block mb-2 text-sm font-medium text-gray-900">
                 Please Enter Place
               </label>
               <input
                 type="text"
                 id="place"
                 value={place}
-                onChange={(e) => setPlace(e.target.value)}
+                onChange={e => setPlace(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 placeholder="e.g., Mumbai"
                 required
@@ -52,6 +50,8 @@ const HomePage = () => {
             </button>
           </form>
           {error && <p className="text-red-500 mt-4">{error}</p>}
+
+          <Home />
         </div>
 
         <ResiableSplitView direction="vertical">
