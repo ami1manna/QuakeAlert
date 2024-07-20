@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS
 
 # Load the model
-with open(r"C:\Users\sahil\OneDrive\Desktop\Codes_ka_bhandar\ultimate-react-course-main\React-Model\backend\earthquake_model (1).pkl",'rb') as file:
+with open(r"C:\Users\admin\Desktop\WoodPecker\backend\earthquake_model.pkl",'rb') as file:
     model = pickle.load(file)
                                 
 @app.route('/predict', methods=['POST'])
