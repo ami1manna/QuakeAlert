@@ -52,11 +52,11 @@ const MapScreen = ({ location }) => {
   return (
     <>
       <MapContainer
-        className='map-container'
+        className='map-container overflow-hidden'
         center={defaultPosition}
         zoom={2}
         maxZoom={maxZoom} // Restrict maximum zoom level
-        style={{ height: '100vh', width: '100%' }}
+        style={{  height:'100%',width: '100%' }}
         whenCreated={mapInstance => mapRef.current = mapInstance}
       >
         <TileLayer

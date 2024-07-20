@@ -3,9 +3,26 @@
 @tailwind utilities;
 
 .map-container {
-    z-index: 1; /* Lower z-index for the map container */
-  }
+  z-index: 1;
+  /* Lower z-index for the map container */
+}
+
+.modal-overlay {
+  z-index: 1000;
+  /* Ensure high z-index for the modal overlay */
+}
+.resiable-bar{
+  z-index: 500;
+}
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   
-  .modal-overlay {
-    z-index: 1000; /* Ensure high z-index for the modal overlay */
-  }
+}
+
+.app {
+  height: 100%;
+}
