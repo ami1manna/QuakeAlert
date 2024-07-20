@@ -1,6 +1,6 @@
 import React from 'react';
 import ChartComponent from '../components/ChartComponent';
-console.log('before import');
+
 const Chart = () => {
     const xAxisLabels = ['USA', 'Canada', 'Mexico', 'Brazil'];
     const yAxisCounts = [10, 7, 3, 9];
