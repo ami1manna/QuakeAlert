@@ -8,7 +8,7 @@ CORS(app)  # Enable CORS
 
 # Load the model
 
-with open(r"C:\Users\sahil\Downloads\earthquake_regressor_model.pkl",'rb') as file:
+with open(r"C:\Users\admin\Desktop\WoodPecker\backend\earthquake_regressor_model.pkl",'rb') as file:
 
     model = pickle.load(file)
                                 
