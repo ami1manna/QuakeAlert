@@ -55,7 +55,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
       try {
         const earthquakeData = await fetchEarthquakeData(year, magnitude);
         setPoints(earthquakeData);
-        console.log(`earthquakeData: ${earthquakeData}`);
+        
         setError(null);
       } catch (err) {
         setError(err.message);

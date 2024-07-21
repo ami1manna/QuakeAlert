@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import anychart from 'anychart';
 import RangeSelector from './RangeSelector'; // Assuming RangeSelector is defined elsewhere
+import LoadingOverlay from './LoadingOverlay';
 
-const GanttChart = ({ earthquakeInfo, setRadius, setSelectedLatLon }) => {
+const GanttChart = ({ isChartLoading,earthquakeInfo, setRadius, setSelectedLatLon }) => {
+  console.log('GanttChart:earthquakeInfo:', earthquakeInfo);
   const chartContainer = useRef(null);
   const chart = useRef(null);
+  const [dataExist, setDataExist] = React.useState(true);
 
   // Define color scheme based on magnitude
   const getColorForMagnitude = (magnitude) => {
@@ -19,8 +22,11 @@ const GanttChart = ({ earthquakeInfo, setRadius, setSelectedLatLon }) => {
 
   // Function to convert earthquakeInfo to Gantt tasks
   const convertToTasks = (earthquakeInfo) => {
-    if (!earthquakeInfo || !earthquakeInfo.features) return [];
+    if (!earthquakeInfo || !earthquakeInfo.features) { 
+      // setDataExist(false);
+      return [];}
 
+    // setDataExist(true);
     return earthquakeInfo.features.map((feature, index) => ({
       id: index,
       name: feature.properties.title,
@@ -35,48 +41,64 @@ const GanttChart = ({ earthquakeInfo, setRadius, setSelectedLatLon }) => {
   };
 
   useEffect(() => {
-    if (chart.current) {
-      // Dispose of the previous chart if it exists
-      chart.current.dispose();
-    }
+    // Apply the theme
+    anychart.onDocumentReady(() => {
+      anychart.theme(anychart.themes.darkBlue); // Apply the dark blue theme
 
-    if (chartContainer.current) {
-      // Create the chart
-      chart.current = anychart.ganttProject();
+      if (chart.current) {
+        // Dispose of the previous chart if it exists
+        chart.current.dispose();
+      }
 
-      // Set the data with colors assigned in convertToTasks
-      const tasks = convertToTasks(earthquakeInfo);
-      chart.current.data(tasks);
+      if (chartContainer.current) {
+        // Create the chart
+        chart.current = anychart.ganttProject();
 
-      // Customize tooltip to include magnitude
-      chart.current.tooltip().useHtml(true).format((info) => {
-        const { name, actualStart, actualEnd, magnitude } = info;
-        return `<b>Name:</b> ${name}<br/><b>Start:</b> ${new Date(actualStart).toLocaleDateString()}<br/><b>End:</b> ${new Date(actualEnd).toLocaleDateString()}<br/><b>Magnitude:</b> ${magnitude}`;
-      });
+        // Set the data with colors assigned in convertToTasks
+        const tasks = convertToTasks(earthquakeInfo);
+        chart.current.data(tasks);
 
-      // Set chart title
-      chart.current.title('Earthquake Events');
+        // Customize tooltip to include magnitude
+        chart.current.tooltip().useHtml(true).format((info) => {
+          const { name, actualStart, actualEnd, magnitude } = info;
+          return `<b>Name:</b> ${name}<br/><b>Start:</b> ${new Date(actualStart).toLocaleDateString()}<br/><b>End:</b> ${new Date(actualEnd).toLocaleDateString()}<br/><b>Magnitude:</b> ${magnitude}`;
+        });
 
-      // Set the chart container
-      chart.current.container(chartContainer.current);
+        // Set chart title
+        chart.current.title('Earthquake Events');
 
-      // Add event listener for click events
-      chart.current.listen('pointClick', (e) => {
-        const task = e.point.getData();
-        if (task) {
-          setSelectedLatLon({ lat: task.lat, lon: task.lon });
-        }
-      });
+        // Set the chart container
+        chart.current.container(chartContainer.current);
 
-      // Draw the chart
-      chart.current.draw();
-    }
+        // Set the background color to black
+        chart.current.background().fill('rgba(10, 0, 0,0.0)'); // Replace with your desired RGB color
+
+
+        // Add event listener for click events
+        chart.current.listen('pointClick', (e) => {
+          const task = e.point.getData();
+          if (task) {
+            setSelectedLatLon({ lat: task.lat, lon: task.lon });
+            console.log('clicked on bars ', task.lat)
+          }
+        });
+
+        // Draw the chart
+        chart.current.draw();
+      }
+    });
   }, [earthquakeInfo]);
 
   return (
     <>
-      <RangeSelector min={10} max={150} step={1} onValueChange={setRadius} />
-      <div ref={chartContainer} style={{ width: '100%', height: '500px' }}></div>
+      <RangeSelector min={10} max={100} step={1} onValueChange={setRadius} />
+      
+      {true ? (
+        <div ref={chartContainer} style={{ width: '100%', height: '100%' }}><LoadingOverlay isLoading={isChartLoading} ></LoadingOverlay></div>
+      ) : (
+        <div className='text-center m-14'>Please Select Range and Click on Earthquake to get Details 🙂</div>
+      )}
+      
     </>
   );
 };

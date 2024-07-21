@@ -23,8 +23,7 @@ export const fetchEarthquakeData = async (year = '2023', magnitude = 4.5) => {
     // Parsing the response as JSON
     const data = await response.json();
 
-    // Logging the data to debug
-    console.log('Fetched data:', data);
+  
 
     // Mapping the data to required format
     return data.features.map(feature => ({

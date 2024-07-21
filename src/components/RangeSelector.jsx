@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 
 const RangeSelector = ({ min = 100, max = 1500, step = 1, onValueChange }) => {
-  const [value, setValue] = useState(min);
+  const [value, setValue] = useState(max);
   const [isHovering, setIsHovering] = useState(false);
   const rangeRef = useRef(null);
 
@@ -9,6 +9,7 @@ const RangeSelector = ({ min = 100, max = 1500, step = 1, onValueChange }) => {
     const newValue = Number(e.target.value);
     setValue(newValue);
     onValueChange(newValue); // Notify parent component about the value change
+ 
     
   };
 
