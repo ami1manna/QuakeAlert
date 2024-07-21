@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const GroupButton = ({ buttons, onButtonClick }) => {
+  const [selectedLabel, setSelectedLabel] = useState(buttons[0].label);
+
+  const handleButtonClick = (label, value) => {
+    setSelectedLabel(label);
+    onButtonClick(value);
+  };
+
   return (
     <div className="inline-flex rounded-md shadow-sm">
       {buttons.map((button, index) => (
         <button
           key={index}
-          onClick={() => onButtonClick(button.value)}
-          className={`px-4 py-2 text-sm font-medium text-white border ${
-            index === 0
-              ? 'border-gray-200 rounded-s-lg'
-              : index === buttons.length - 1
-              ? 'border-gray-200 rounded-e-lg'
-              : 'border-t border-b border-gray-200'
+          onClick={() => handleButtonClick(button.label, button.value)}
+          className={`px-3 py-1.5 text-sm font-medium border rounded-md ${
+            button.label === selectedLabel
+              ? 'text-white border border-solid border-slate-600 outline-4 outline-offset-2 outline-emerald-300 bg-blue-600' // Highlighted button style
+              : 'text-gray-900 border-gray-200 bg-gray-50'  // Default button style
           } hover:bg-opacity-90 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-white`}
           style={{ backgroundColor: button.color || 'gray' }}
         >

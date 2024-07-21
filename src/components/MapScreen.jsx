@@ -5,7 +5,7 @@ import HeatmapLayerComponent from './HeatmapLayerComponent';
 import { fetchEarthquakeData } from '../services/earthquakeApi';
 import 'leaflet.heat';
 import GroupButton from './GroupButton'; // Import the GroupButton component
-
+import LoadingOverlay from './LoadingOverlay';
 // Fixing marker icon issue
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -40,6 +40,7 @@ const ClickHandler = ({ onClick }) => {
 };
 
 const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [points, setPoints] = useState([]);
   const [error, setError] = useState(null);
   const mapRef = useRef();
@@ -49,6 +50,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
   const [year, setYear] = useState(2023);
 
   useEffect(() => {
+    setIsLoading(true);
     const getEarthquakeData = async () => {
       try {
         const earthquakeData = await fetchEarthquakeData(year, magnitude);
@@ -57,6 +59,9 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
         setError(null);
       } catch (err) {
         setError(err.message);
+      }
+      finally {
+        setIsLoading(false);
       }
     };
     // console.log(`Magnitude: ${value}`);
@@ -111,6 +116,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
         style={{ height: '100%', width: '100%' }}
         whenCreated={mapInstance => mapRef.current = mapInstance}
       >
+       <LoadingOverlay isLoading={isLoading}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -143,6 +149,7 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
         <HeatmapLayerComponent points={points} />
         <LocationUpdater location={location} />
         <ClickHandler onClick={onMapClick} />
+      </LoadingOverlay>
       </MapContainer>
       
       {/* GroupButton at bottom-left corner */}
