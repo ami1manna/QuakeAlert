@@ -12,11 +12,12 @@ app.use(express.json());
 
 // Routes
 const authRoutes = require('./routes/auth');
-const geocodingRoutes = require('./routes/geocoding'); // Import geocoding routes
+const geocodingRoutes = require('./routes/geocoding');
+const userDetailsRoutes = require('./routes/userdetails'); // Import user details routes
 
 app.use('/auth', authRoutes);
-app.use('/geocoding', geocodingRoutes); // Use geocoding routes
-
+app.use('/geocoding', geocodingRoutes);
+app.use('/details', userDetailsRoutes); // Use user details routes
 
 // MongoDB connection
 const MONGO_URI = process.env.MONGO_URI;
