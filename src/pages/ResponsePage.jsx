@@ -1,18 +1,21 @@
 // import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useState,useEffect } from "react";
 import "../styles/response.css";
 
 // const ResponsePage = () => {
-//   const [email, setEmail] = useState("");
-//   useEffect(() => {
-//     const email = localStorage.getItem("userEmail");
-//     if (email) setEmail(email);
-//   });
+  
 //   return <>{email ? <>Welcome : {email}</> : <> Pls Make Sure You Are Logged in</>}</>;
 // };
 
 
 
 function ResponsePage() {
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    const email = localStorage.getItem("userEmail");
+    if (email) setEmail(email);
+  });
   return (
     <div>
       <nav className="navh">
@@ -313,7 +316,7 @@ function ResponsePage() {
           </div>
           <div className="btns">
             <button className="btn-1">Request Emergency Assistance</button>
-            <button className="btn-2">View Evacuation Routes</button>
+            <NavLink to="/evacuation" className="btn-2">View Evacuation Routes</NavLink>
           </div>
         </div>
         <div className="consecond">
