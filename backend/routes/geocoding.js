@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
   const lngNum = parseFloat(lng);
   const radiusNum = parseFloat(radius);
 
-  if (isNaN(latNum) || isNaN(lngNum) || isNaN(radiusNum) || radiusNum < 1 || radiusNum > 150) {
+  if (isNaN(latNum) || isNaN(lngNum) || isNaN(radiusNum) || radiusNum < 1 || radiusNum > 1000) {
     return res.status(400).json({ error: 'Latitude, longitude must be numbers and radius must be a number between 1 and 150' });
   }
 
@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
         format: 'geojson',
         latitude: latNum,
         longitude: lngNum,
-        maxradius: radiusNum // Radius in kilometers
+        maxradius:  radiusNum // Radius in kilometers
       }
     });
 

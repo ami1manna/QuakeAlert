@@ -1,9 +1,7 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import axios from "axios";
 import MODALCLOSE from "../assets/modalclose.svg";
 
-// eslint-disable-next-line react/prop-types
 const LoginModel = ({ toggleSignInModal, toggleSignUpModal, handleLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,8 +11,8 @@ const LoginModel = ({ toggleSignInModal, toggleSignUpModal, handleLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:5000/auth/login", { email, password });
-      handleLogin(response.data.token, response.data.result.email); // Pass token to handleLogin function
-      toggleSignInModal(); // Close the login modal
+      handleLogin(response.data.token, response.data.result.email);
+      toggleSignInModal();
     } catch (error) {
       console.error("Error logging in:", error.response.data);
       setError("Invalid credentials. Please try again.");
@@ -24,7 +22,7 @@ const LoginModel = ({ toggleSignInModal, toggleSignUpModal, handleLogin }) => {
   return (
     <div
       id="authentication-modal"
-      className="fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full flex"
+      className="fixed top-0 right-0 left-0 modal-overlay flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full"
     >
       <div className="relative p-4 w-full max-w-md max-h-full">
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -32,7 +30,7 @@ const LoginModel = ({ toggleSignInModal, toggleSignUpModal, handleLogin }) => {
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Login</h3>
             <button
               type="button"
-              className="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               onClick={toggleSignInModal}
             >
               <img src={MODALCLOSE} alt="Close" />

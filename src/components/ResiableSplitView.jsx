@@ -13,13 +13,13 @@ const ResiableSplitView = ({ direction = "vertical" ,children}) => {
     return (
       <div className="flex-1 h-screen">
         <ResizableBox
-          className="bg-blue-500 text-white z-50"
+          className="bg-blue-500 text-white z-10"
           height={size}
           width={Infinity}
           resizeHandles={["s"]}
           onResize={handleResize}
           axis="y"
-          handle={<div className="h-2 bg-gray-300 cursor-row-resize" />}
+          handle={<div className="h-2 bg-gray-300 cursor-row-resize z-40" />}
         >
           <div className="h-full flex items-center justify-center">
             {children[0]}
@@ -27,7 +27,7 @@ const ResiableSplitView = ({ direction = "vertical" ,children}) => {
         </ResizableBox>
         <div
 
-          className="bg-slate-800 text-white flex items-center justify-center overflow-auto"
+          className="bg-slate-800 text-white flex items-center justify-center overflow-auto z-10"
 
           style={{ height: `calc(100% - ${size}px)` }}
         >

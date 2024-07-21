@@ -20,6 +20,9 @@ const HomePage = () => {
   const [earthquakeInfo, setEarthquakeInfo] = useState(null);
   const [radius, setRadius] = useState(10);
 
+  // /loading 
+  const [isChartLoading, setIsChartLoading] = useState(false);
+
   // Debounce function to limit API calls
   const debounce = (func, delay) => {
     let timer;
@@ -32,17 +35,21 @@ const HomePage = () => {
   const handleMapClick = useCallback(async (latlng) => {
     setSelectedLatLon(latlng);
     try {
+      setIsChartLoading(true);
       const response = await axios.get(`http://localhost:5000/geocoding`, {
         params: {
           lat: latlng.lat,
           lng: latlng.lng,
-          radius: radius,
+          radius: radius, 
         },
       });
       setEarthquakeInfo(response.data);
     } catch (err) {
       setError(err.message);
       setEarthquakeInfo(null);
+    }
+    finally{
+      setIsChartLoading(false);
     }
   }, [radius]);
 
@@ -100,8 +107,9 @@ const HomePage = () => {
           selectedLatLon={selectedLatLon}
           earthquakeInfo={earthquakeInfo}
           onMapClick={handleMapClick}
+          
         />
-        <HomeCharts earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius} />
+        <HomeCharts isChartLoading={isChartLoading} earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius} />
       </ResiableSplitView>
     </div>
 
