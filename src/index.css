@@ -2,18 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tailwind CSS styles with custom z-index values */
+
 .map-container {
-  z-index: 1;
-  /* Lower z-index for the map container */
+  z-index: 1; /* Lower z-index for the map container */
 }
 
 .modal-overlay {
-  z-index: 1000;
-  /* Ensure high z-index for the modal overlay */
+  z-index: 1000; /* Ensure high z-index for the modal overlay */
 }
-.resiable-bar{
-  z-index: 500;
+
+.resizable-bar {
+  z-index: 200;
 }
+
 html,
 body,
 #root {

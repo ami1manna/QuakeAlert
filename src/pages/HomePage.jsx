@@ -20,6 +20,7 @@ const HomePage = () => {
   const [earthquakeInfo, setEarthquakeInfo] = useState(null);
   const [radius, setRadius] = useState(10);
 
+
   // Debounce function to limit API calls
   const debounce = (func, delay) => {
     let timer;
@@ -36,7 +37,7 @@ const HomePage = () => {
         params: {
           lat: latlng.lat,
           lng: latlng.lng,
-          radius: radius,
+          radius: radius, 
         },
       });
       setEarthquakeInfo(response.data);
@@ -100,6 +101,7 @@ const HomePage = () => {
           selectedLatLon={selectedLatLon}
           earthquakeInfo={earthquakeInfo}
           onMapClick={handleMapClick}
+          
         />
         <HomeCharts earthquakeInfo={earthquakeInfo} selectedLatLon={selectedLatLon} setSelectedLatLon={setSelectedLatLon} setRadius={setRadius} />
       </ResiableSplitView>

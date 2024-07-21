@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
-
 import L from 'leaflet';
 import HeatmapLayerComponent from './HeatmapLayerComponent';
 import { fetchEarthquakeData } from '../services/earthquakeApi';
 import 'leaflet.heat';
+import GroupButton from './GroupButton'; // Import the GroupButton component
 
 // Fixing marker icon issue
 delete L.Icon.Default.prototype._getIconUrl;
@@ -30,7 +29,6 @@ const LocationUpdater = ({ location }) => {
   return null;
 };
 
-
 const ClickHandler = ({ onClick }) => {
   useMapEvents({
     click(event) {
@@ -42,45 +40,75 @@ const ClickHandler = ({ onClick }) => {
 };
 
 const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => {
-
   const [points, setPoints] = useState([]);
   const [error, setError] = useState(null);
   const mapRef = useRef();
+ 
+  // filters on map
+  const [magnitude, setMagnitude] = useState(4.0);
+  const [year, setYear] = useState(2023);
 
   useEffect(() => {
     const getEarthquakeData = async () => {
       try {
-        const earthquakeData = await fetchEarthquakeData();
-
+        const earthquakeData = await fetchEarthquakeData(year, magnitude);
         setPoints(earthquakeData);
+        console.log(`earthquakeData: ${earthquakeData}`);
         setError(null);
       } catch (err) {
         setError(err.message);
       }
     };
+    // console.log(`Magnitude: ${value}`);
     getEarthquakeData();
-  }, []);
+  }, [year, magnitude]); // Added year and magnitude to the dependency array
 
+  // handle GroupButton click
+  const handleButtonClick = (value) => {
+    // Check if the value exists in yearButtons array
+    const yearButton = yearButtons.find(button => button.value === value);
+    if (yearButton && value !== year) {
+      setYear(value);
+    }
+    
+    // Check if the value exists in magnitudeButtons array
+    const magnitudeButton = magnitudeButtons.find(button => button.value === value);
+    if (magnitudeButton && value !== magnitude) {
+      setMagnitude(value); // Update magnitude state
+    }
+  };
+  
   const defaultPosition = [20, 0]; // Centered on the world
   const maxZoom = 15; // Set your desired maximum zoom level here
-
   const minZoom = 2; // Restrict minimum zoom level here
   const bounds = [[-90, -180], [90, 180]]; // Set map boundaries
 
+  // Button configurations
+  const yearButtons = [
+    { label: '2023', value: '2023', color: 'blue' },
+    { label: '2022', value: '2022', color: 'blue' },
+    { label: '2021', value: '2021', color: 'blue' },
+    { label: '2020', value: '2020', color: 'blue' },
+  ];
 
+  const magnitudeButtons = [
+    { label: '4.0+', value: '4.0', color: 'lime' },
+    { label: '5.0+', value: '5.0', color: 'yellow' },
+    { label: '6.0+', value: '6.0', color: 'red' },
+    { label: '7.0+', value: '7.0', color: 'darkred' },
+  ];
+  
   return (
     <>
       <MapContainer
-        className='map-container overflow-hidden'
+        className='z-20 overflow-hidden'
         center={defaultPosition}
         zoom={2}
-        maxZoom={maxZoom} // Restrict maximum zoom level
-
-        minZoom={minZoom} // Restrict minimum zoom level
-        maxBounds={bounds} // Set map boundaries
-        maxBoundsViscosity={1.0} // Makes sure the map stays within the set bounds
+        maxZoom={maxZoom}
+        minZoom={minZoom}
+        maxBounds={bounds}
+        maxBoundsViscosity={1.0}
         style={{ height: '100%', width: '100%' }}
-
         whenCreated={mapInstance => mapRef.current = mapInstance}
       >
         <TileLayer
@@ -115,8 +143,17 @@ const MapScreen = ({ location, selectedLatLon, earthquakeInfo, onMapClick }) => 
         <HeatmapLayerComponent points={points} />
         <LocationUpdater location={location} />
         <ClickHandler onClick={onMapClick} />
-
       </MapContainer>
+      
+      {/* GroupButton at bottom-left corner */}
+      <div style={{ position: 'absolute', bottom: '2px', left: '10px' }} className='z-30'>
+        <GroupButton buttons={yearButtons} onButtonClick={handleButtonClick} />
+      </div>
+
+      {/* GroupButton at bottom-right corner */}
+      <div style={{ position: 'absolute', bottom: '2px', right: '20px' }} className='z-30'>
+        <GroupButton buttons={magnitudeButtons} onButtonClick={handleButtonClick} />
+      </div>
     </>
   );
 };
