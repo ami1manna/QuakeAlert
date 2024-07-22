@@ -21,3 +21,18 @@ export const fetchCoordinates = async place => {
     throw new Error("Error fetching data");
   }
 };
+
+export const reverseGeocode = async (lat, lng) => {
+  const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
+    params: {
+      q: `${lat},${lng}`,
+      key: API_KEY,
+    },
+  });
+
+  if (response.data.results && response.data.results.length > 0) {
+    return response.data.results[0].formatted; // Adjust according to your API response structure
+  } else {
+    throw new Error("Place not found");
+  }
+};

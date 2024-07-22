@@ -28,6 +28,7 @@
     "react-map-gl": "^7.1.7",
     "react-resizable": "^3.0.5",
     "react-router-dom": "^6.25.1",
+    "react-toastify": "^10.0.5"
     "react-table": "^7.8.0"
   },
   "devDependencies": {

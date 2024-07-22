@@ -4,14 +4,12 @@ import { useState,useEffect } from "react";
 import "../styles/response.css";
 
 
+
 function ResponsePage() {
-
-
 
   return (
     <div>
       <nav className="navh">
-    
         <div className="headers">
           <div>
             {/* <span className="welcomeh">We welcome all our Users...</span> */}
