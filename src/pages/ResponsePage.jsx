@@ -1,6 +1,5 @@
 // import { useEffect, useState } from "react";
 import "../styles/response.css";
-
 // const ResponsePage = () => {
 //   const [email, setEmail] = useState("");
 //   useEffect(() => {
@@ -10,13 +9,10 @@ import "../styles/response.css";
 //   return <>{email ? <>Welcome : {email}</> : <> Pls Make Sure You Are Logged in</>}</>;
 // };
 
-
-
 function ResponsePage() {
   return (
     <div>
       <nav className="navh">
-    
         <div className="headers">
           <div>
             <span className="welcomeh">We welcome all our Users...</span>
