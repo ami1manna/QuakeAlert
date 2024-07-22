@@ -4,6 +4,7 @@ import Root from './pages/Root';
 import  Chart  from './pages/Chart';
 import ResponsePage from './pages/ResponsePage';
 import Evacuation from './pages/Evacuation';
+import Sos from './pages/Sos';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path:'/evacuation',
         element:<Evacuation/>
+      },
+      {
+        path:'/sos',
+        element:<Sos/>
       }
       
     ]
