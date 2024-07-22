@@ -24,4 +24,30 @@ router.get('/:email', async (req, res) => {
     }
 });
 
+
+
+// Update SOS state to true
+router.post('/update-sos', async (req, res) => {
+    const { email ,sos} = req.body;
+  
+    try {
+      // Find the user by email
+      const user = await User.findOne({ email });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Update the sos field to true
+      user.sos = sos;
+      await user.save();
+  
+      res.status(200).json({ message: 'SOS state updated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update SOS state' });
+    }
+  });
+  
+
+
 module.exports = router;

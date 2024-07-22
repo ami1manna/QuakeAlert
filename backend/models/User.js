@@ -24,6 +24,10 @@ const UserSchema = new mongoose.Schema({
   },
   long:{
     type: Number,
+  },
+  sos:{
+    type: Boolean,
+    default: false
   }
 });
 
