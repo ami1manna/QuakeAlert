@@ -405,8 +405,8 @@ function ResponsePage() {
           <span className="containerh">
             <h1>Emergency Services</h1>
           </span>
-          <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div className="contacts grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <main className="container mx-auto py-12 w-full px-4 sm:px-6 lg:px-8">
+            <div className="w-full contacts grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               <div className="cards bg-white shadow-md rounded-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold">Police</h2>
