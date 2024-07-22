@@ -1,6 +1,7 @@
 // React Components
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import axios from 'axios';
 // images
 import LOGO from '../assets/logo.jpg';
 import MENU from '../assets/menu.svg';
@@ -23,6 +24,7 @@ const Navbar = () => {
   const [createAccount, setCreateAccount] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
   const [userEmail, setUserEmail] = useState('');
+  const [userDetails, setUserDetails] = useState({});
   
   // Check if user is already logged in on component mount
   useEffect(() => {
@@ -32,7 +34,23 @@ const Navbar = () => {
       setIsLoggedIn(true);
       setUserEmail(userEmail);
     }
-  }, []);
+    if(isLoggedIn){
+      const fetchUserInfo = async () => {
+        const storedEmail = localStorage.getItem('userEmail');
+        if (storedEmail) {
+            try {
+                const response = await axios.get(`http://localhost:5000/details/${storedEmail}`);
+                setUserDetails(response.data.user);
+                console.log(response.data.user);
+            } catch (err) {
+                console.error('Error fetching user data:', err);
+            }
+        }
+    };
+
+    fetchUserInfo();
+    }
+  }, [isLoggedIn]);
 
   const handleLogin = (token, userEmail) => {
 
@@ -144,6 +162,18 @@ const Navbar = () => {
                 >
                   Charts
                 </NavLink>
+              </li>
+              <li>
+                {
+                  userDetails.admin&&
+                  <NavLink
+                  to="/dashboard"
+                  className=" block p-6  md:p-0 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-blue-500 "
+                  style={({ isActive }) => (isActive ? activeStyle : inactiveStyle)}
+                  >
+                  Dashboard
+                </NavLink>
+                }
               </li>
 
               {/* Add more NavLink items as needed */}

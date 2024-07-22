@@ -28,6 +28,14 @@ const UserSchema = new mongoose.Schema({
   sos:{
     type: Boolean,
     default: false
+  },
+  admin:{
+    type:Boolean,
+    default: false
+  },
+  sosStatus:{
+    type: Boolean,
+    default: false
   }
 });
 

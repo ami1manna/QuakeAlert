@@ -17,13 +17,14 @@ const userDetailsRoutes = require('./routes/userdetails');
 const locationRoutes = require('./routes/location'); // Add this line
 const safePlaces = require('./routes/getsafeplace');
 const emergencyContacts = require('./routes/contact');
-
+const getAllUsers = require('./routes/admin');
 app.use('/auth', authRoutes);
 app.use('/geocoding', geocodingRoutes);
 app.use('/details', userDetailsRoutes);
 app.use('/location', locationRoutes); // Add this line
 app.use('/safeplaces', safePlaces);
 app.use('/emergency-contacts',emergencyContacts)
+app.use('/getusers',getAllUsers)
 
 // MongoDB connection
 const MONGO_URI = process.env.MONGO_URI;
