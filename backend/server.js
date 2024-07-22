@@ -17,7 +17,7 @@ const userDetailsRoutes = require('./routes/userdetails');
 const locationRoutes = require('./routes/location'); // Add this line
 
 app.use('/auth', authRoutes);
-app.use('/geocode', geocodingRoutes);
+app.use('/geocoding', geocodingRoutes);
 app.use('/details', userDetailsRoutes);
 app.use('/location', locationRoutes); // Add this line
 

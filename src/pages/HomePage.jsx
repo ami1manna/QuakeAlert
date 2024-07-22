@@ -44,6 +44,7 @@ const HomePage = () => {
         },
       });
       setEarthquakeInfo(response.data);
+      console.log(response.data);
     } catch (err) {
       setError(err.message);
       setEarthquakeInfo(null);

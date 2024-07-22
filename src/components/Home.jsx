@@ -13,7 +13,7 @@ function Home() {
 
   const handlePredict = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/predict", {
+      const response = await axios.post("http://localhost:8001/predict", {
         longitude: parseFloat(longitude),
         latitude: parseFloat(latitude),
         depth: parseFloat(depth),
