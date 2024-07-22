@@ -1,6 +1,7 @@
 * {
   margin: 0px;
   padding: 0px;
+
 }
 .navh {
   background-color: rgb(238, 236, 232);
@@ -72,8 +73,10 @@ li {
   margin: 10px 9px;
 }
 
+
 .btns {
   margin: 0px 0px 20px 0px;
+
 }
 
 .btn-1 {

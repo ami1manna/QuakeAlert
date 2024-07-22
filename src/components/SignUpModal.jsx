@@ -1,15 +1,28 @@
-import MODALCLOSE from "../assets/modalclose.svg";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import MODALCLOSE from "../assets/modalclose.svg";
 
-// eslint-disable-next-line react/prop-types
 const SignUpModal = ({ toggleSignUpModal }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     location: '',
-    username: ''
+    username: '',
+    lat: null,
+    long: null
   });
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          lat: position.coords.latitude,
+          long: position.coords.longitude
+        }));
+      });
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,7 +38,9 @@ const SignUpModal = ({ toggleSignUpModal }) => {
         email: '',
         password: '',
         location: '',
-        username: ''
+        username: '',
+        lat: null,
+        long: null
       });
       toggleSignUpModal(); // Close modal after successful signup
     } catch (error) {
@@ -107,4 +122,4 @@ const SignUpModal = ({ toggleSignUpModal }) => {
   );
 };
 
-export default SignUpModal
+export default SignUpModal;

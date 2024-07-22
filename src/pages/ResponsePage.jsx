@@ -1,21 +1,18 @@
 // import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useState,useEffect } from "react";
 import "../styles/response.css";
-// const ResponsePage = () => {
-//   const [email, setEmail] = useState("");
-//   useEffect(() => {
-//     const email = localStorage.getItem("userEmail");
-//     if (email) setEmail(email);
-//   });
-//   return <>{email ? <>Welcome : {email}</> : <> Pls Make Sure You Are Logged in</>}</>;
-// };
+
+
 
 function ResponsePage() {
+
   return (
     <div>
       <nav className="navh">
         <div className="headers">
           <div>
-            <span className="welcomeh">We welcome all our Users...</span>
+            {/* <span className="welcomeh">We welcome all our Users...</span> */}
             <div className="cardm">
               <div className="card">
                 <svg
@@ -42,7 +39,7 @@ function ResponsePage() {
                   />
                 </svg>
                 <div className="main">23 °C</div>
-                <div className="mainsub">Dunmore, Ireland</div>
+                {/* <div className="mainsub">Dunmore, Ireland</div> */}
               </div>
               <div className="card2">
                 <div className="upper">
@@ -301,6 +298,7 @@ function ResponsePage() {
       </nav>
       <div className="container">
         <div className="confirst">
+          <div className="p-6  bg-slate-200 border border-gray-200 rounded-2xl shadow hover:bg-gray-300 ">
           <span className="containerh">
             <h1>Emergency Preparedness</h1>
           </span>
@@ -308,9 +306,10 @@ function ResponsePage() {
             Be ready for any emergency with our comprehensive resources and guidance.
           </div>
           <div className="btns">
-            <button className="btn-1">Request Emergency Assistance</button>
-            <button className="btn-2">View Evacuation Routes</button>
+          <NavLink to="/sos" className="btn-1">Request Emergency SOS</NavLink>
+          <NavLink to="/evacuation" className="btn-2">View Evacuation Routes</NavLink>
           </div>
+        </div>
         </div>
         <div className="consecond">
           <span className="containerh">
@@ -398,8 +397,8 @@ function ResponsePage() {
           <span className="containerh">
             <h1>Emergency Services</h1>
           </span>
-          <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div className="contacts grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <main className="container mx-auto py-12 w-full px-4 sm:px-6 lg:px-8">
+            <div className="w-full contacts grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               <div className="cards bg-white shadow-md rounded-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-xl font-bold">Police</h2>

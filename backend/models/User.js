@@ -19,6 +19,24 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  lat:{
+    type: Number,
+  },
+  long:{
+    type: Number,
+  },
+  sos:{
+    type: Boolean,
+    default: false
+  },
+  admin:{
+    type:Boolean,
+    default: false
+  },
+  sosStatus:{
+    type: Boolean,
+    default: false
+  }
 });
 
 

@@ -35,6 +35,7 @@ const HomePage = () => {
     };
   };
 
+
   const handleMapClick = useCallback(
     async latlng => {
       setSelectedLatLon(latlng);
@@ -63,6 +64,7 @@ const HomePage = () => {
     },
     [radius]
   );
+
 
   const handleSubmit = async event => {
     event.preventDefault();
