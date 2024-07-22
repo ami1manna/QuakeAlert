@@ -14,7 +14,7 @@ const GlobalFilter = ({ globalFilter, setGlobalFilter }) => (
   </div>
 );
 
-const UsersTable = ({ columns, data, handleSosStatusClick }) => {
+const ResponseTable = ({ columns, data, handleEdit, handleDelete }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -69,6 +69,7 @@ const UsersTable = ({ columns, data, handleSosStatusClick }) => {
                           </span>
                         </th>
                       ))}
+                      {/* Note: Remove actions header here */}
                     </tr>
                   ))}
                 </thead>
@@ -77,61 +78,66 @@ const UsersTable = ({ columns, data, handleSosStatusClick }) => {
                     prepareRow(row);
                     return (
                       <tr key={row.id} {...row.getRowProps()}>
-                        {row.cells.map(cell => (
-                          <td key={cell.column.id} {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap">
+                        {row.cells.map((cell) =>{
+                          
+                         return(
+                          <>
+                          {
+                        cell.value &&
+                            <td key={cell.column.id} {...cell.getCellProps()} className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                             {cell.render('Cell')}
                           </td>
-                        ))}
+                          }
+                          </>
+                        
+                        )}
+                        )}
+                        {/* Render the actions cell */}
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <button
+                            onClick={() => handleEdit(row.original)}
+                            className="text-blue-600 hover:text-blue-900 mr-2"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(row.original._id)}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     );
                   })}
                 </tbody>
+
               </table>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Pagination */}
-      <div className="flex justify-between p-4">
-        <button
-          onClick={() => gotoPage(0)}
-          disabled={!canPreviousPage}
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-        >
+      {/* Pagination Controls */}
+      <div className="p-4 flex justify-between">
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>
-        <button
-          onClick={() => previousPage()}
-          disabled={!canPreviousPage}
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-        >
+        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
           {'<'}
         </button>
-        <button
-          onClick={() => nextPage()}
-          disabled={!canNextPage}
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-        >
+        <button onClick={() => nextPage()} disabled={!canNextPage}>
           {'>'}
         </button>
-        <button
-          onClick={() => gotoPage(pageOptions.length - 1)}
-          disabled={!canNextPage}
-          className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-        >
+        <button onClick={() => gotoPage(pageOptions.length - 1)} disabled={!canNextPage}>
           {'>>'}
         </button>
         <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
+          Page {pageIndex + 1} of {pageOptions.length}
         </span>
         <select
           value={pageSize}
           onChange={e => setPageSize(Number(e.target.value))}
-          className="ml-2 px-2 py-1 border border-gray-300 rounded"
         >
           {[10, 20, 30, 40, 50].map(size => (
             <option key={size} value={size}>
@@ -144,4 +150,4 @@ const UsersTable = ({ columns, data, handleSosStatusClick }) => {
   );
 };
 
-export default UsersTable;
+export default ResponseTable;

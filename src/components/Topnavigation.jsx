@@ -41,7 +41,7 @@ const Navbar = () => {
             try {
                 const response = await axios.get(`http://localhost:5000/details/${storedEmail}`);
                 setUserDetails(response.data.user);
-                console.log(response.data.user);
+                
             } catch (err) {
                 console.error('Error fetching user data:', err);
             }

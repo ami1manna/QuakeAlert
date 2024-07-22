@@ -6,7 +6,7 @@ const DashBoard = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
-      <nav className="bg-gray-800 text-white w-48 p-4">
+      <nav className="bg-gray-800 text-white w-48 p-4 ">
         <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
         <ul className="space-y-2 flex flex-col">
           <li>
@@ -21,7 +21,7 @@ const DashBoard = () => {
           </li>
           <li>
             <NavLink 
-              to="settings" 
+              to="response-team" 
               className={({ isActive }) => 
                 `block px-4 py-2 rounded ${isActive ? 'bg-gray-700' : 'hover:bg-gray-700'}`
               }

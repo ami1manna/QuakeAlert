@@ -6,8 +6,8 @@ import ResponsePage from './pages/ResponsePage';
 import Evacuation from './pages/Evacuation';
 import Sos from './pages/Sos';
 import DashBoard from './pages/DashBoard/DashBoard';
-import Demo from './pages/DashBoard/Demo';
 import User from './pages/DashBoard/User';
+import ResponseTeam from './pages/DashBoard/ResponseTeam';
 const router = createBrowserRouter([
   {
     path:'/',
@@ -42,8 +42,8 @@ const router = createBrowserRouter([
             element: <User />
           },
           {
-            path: 'settings',
-            element: <Demo />
+            path: 'response-team',
+            element: <ResponseTeam />
           }
         ]
       }
