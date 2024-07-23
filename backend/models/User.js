@@ -24,6 +24,18 @@ const UserSchema = new mongoose.Schema({
   },
   long:{
     type: Number,
+  },
+  sos:{
+    type: Boolean,
+    default: false
+  },
+  admin:{
+    type:Boolean,
+    default: false
+  },
+  sosStatus:{
+    type: Boolean,
+    default: false
   }
 });
 
