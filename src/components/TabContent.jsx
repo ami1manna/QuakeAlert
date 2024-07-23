@@ -2,23 +2,7 @@
 import React from 'react';
 
 import GanttChart from './GanttChart';
-const tasks = [
-  {
-    id: '1',
-    name: 'Task 1',
-    actualStart: '2024-07-01',
-    actualEnd: '2024-07-10',
-    progress: 75
-  },
-  {
-    id: '2',
-    name: 'Task 3',
-    actualStart: '2024-07-01',
-    actualEnd: '2024-07-10',
-    progress: 75
-  },
-  // Add more tasks here
-];
+
 
 const TabContent = ({ activeTab , earthquakeInfo,selectedLatLon,setRadius,setSelectedLatLon ,isChartLoading}) => {
  
