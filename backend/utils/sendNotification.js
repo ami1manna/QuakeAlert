@@ -1,38 +1,33 @@
-const nodemailer = require('nodemailer');
+const axios = require('axios');
 
-// Configure your email transport using a service like Gmail, SendGrid, etc.
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // Use your email service provider
-  auth: {
-    user: process.env.EMAIL_USER, // Your email address
-    pass: process.env.EMAIL_PASS  // Your email password or application-specific password
-  }
-});
+// Function to send email using EmailJS
+const sendEmail = (email, fromName, toName, message) => {
+    const templateParams = {
+        from_name: fromName,
+        to_name: toName,
+        to_email: email,
+        message: message,
+        subject: 'You have a new message!'
+    };
 
-// Function to send an email
-const sendEmail = (email, subject, text) => {
-  const mailOptions = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: subject,
-    text: text
-  };
-
-  return transporter.sendMail(mailOptions);
+    return axios.post('https://api.emailjs.com/api/v1.0/email/send', {
+        service_id: process.env.EMAILJS_SERVICE_ID,
+        template_id: process.env.EMAILJS_TEMPLATE_ID,
+        user_id: process.env.EMAILJS_USER_ID,
+        template_params: templateParams
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        console.log('Email sent successfully:', response.data);
+        return response.data;
+    })
+    .catch(error => {
+        console.error('Error sending email:', error);
+        throw error;
+    });
 };
 
-// Function to send SMS (can use an SMS service like Twilio)
-// This is a placeholder and needs to be implemented separately if needed
-const sendSMS = (phone, message) => {
-  // Implement SMS sending logic here
-};
-
-const sendNotification = (phone, email, message) => {
-  // Send SMS and Email notifications
-  return Promise.all([
-    sendSMS(phone, message), // Make sure you have implemented sendSMS
-    sendEmail(email, 'Emergency Alert', message)
-  ]);
-};
-
-module.exports = sendNotification;
+module.exports = sendEmail;

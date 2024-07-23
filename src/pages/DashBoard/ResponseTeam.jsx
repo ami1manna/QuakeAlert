@@ -91,89 +91,96 @@ const ResponseTeam = () => {
         handleDelete={handleDelete} 
       />
 
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-4 rounded shadow-lg w-1/3">
-            <h2 className="text-xl mb-4">Edit Response Team Member</h2>
-            <div className="mb-4">
-              <label className="block mb-2">Name:</label>
-              <input 
-                type="text" 
-                name="name" 
-                value={selectedItem.name || ''} 
-                onChange={handleChange} 
-                className="border border-gray-300 rounded p-2 w-full"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Role:</label>
-              <input 
-                type="text" 
-                name="role" 
-                value={selectedItem.role || ''} 
-                onChange={handleChange} 
-                className="border border-gray-300 rounded p-2 w-full"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Phone:</label>
-              <input 
-                type="text" 
-                name="phone" 
-                value={selectedItem.phone || ''} 
-                onChange={handleChange} 
-                className="border border-gray-300 rounded p-2 w-full"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Email:</label>
-              <input 
-                type="email" 
-                name="email" 
-                value={selectedItem.email || ''} 
-                onChange={handleChange} 
-                className="border border-gray-300 rounded p-2 w-full"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Location:</label>
-              <input 
-                type="text" 
-                name="location" 
-                value={selectedItem.location || ''} 
-                onChange={handleChange} 
-                className="border border-gray-300 rounded p-2 w-full"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Status:</label>
-              <select 
-                name="status" 
-                value={selectedItem.status || ''} 
-                onChange={handleChange} 
-                className="border border-gray-300 rounded p-2 w-full"
-              >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
-            </div>
-            <div className="flex justify-end">
-              <button 
-                onClick={handleUpdate} 
-                className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
-              >
-                Update
-              </button>
-              <button 
-                onClick={() => setIsModalOpen(false)} 
-                className="bg-gray-500 text-white px-4 py-2 rounded"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
+{isModalOpen && (
+  <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+    <div className="bg-white p-4 rounded shadow-lg w-1/3">
+      <h2 className="text-xl mb-4">Edit Response Team Member</h2>
+      <div className="flex mb-4">
+        <div className="w-1/2 pr-2">
+          <label className="block mb-2">Name:</label>
+          <input 
+            type="text" 
+            name="name" 
+            value={selectedItem.name || ''} 
+            onChange={handleChange} 
+            className="border border-gray-300 rounded p-2 w-full"
+          />
         </div>
-      )}
+        <div className="w-1/2 pl-2">
+          <label className="block mb-2">Role:</label>
+          <input 
+            type="text" 
+            name="role" 
+            value={selectedItem.role || ''} 
+            onChange={handleChange} 
+            className="border border-gray-300 rounded p-2 w-full"
+          />
+        </div>
+      </div>
+      <div className="flex mb-4">
+        <div className="w-1/2 pr-2">
+          <label className="block mb-2">Phone:</label>
+          <input 
+            type="text" 
+            name="phone" 
+            value={selectedItem.phone || ''} 
+            onChange={handleChange} 
+            className="border border-gray-300 rounded p-2 w-full"
+          />
+        </div>
+        <div className="w-1/2 pl-2">
+          <label className="block mb-2">Email:</label>
+          <input 
+            type="email" 
+            name="email" 
+            value={selectedItem.email || ''} 
+            onChange={handleChange} 
+            className="border border-gray-300 rounded p-2 w-full"
+          />
+        </div>
+      </div>
+      <div className="flex mb-4">
+        <div className="w-1/2 pr-2">
+          <label className="block mb-2">Location:</label>
+          <input 
+            type="text" 
+            name="location" 
+            value={selectedItem.location || ''} 
+            onChange={handleChange} 
+            className="border border-gray-300 rounded p-2 w-full"
+          />
+        </div>
+        <div className="w-1/2 pl-2">
+          <label className="block mb-2">Status:</label>
+          <select 
+            name="status" 
+            value={selectedItem.status || ''} 
+            onChange={handleChange} 
+            className="border border-gray-300 rounded p-2 w-full"
+          >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <button 
+          onClick={handleUpdate} 
+          className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+        >
+          Update
+        </button>
+        <button 
+          onClick={() => setIsModalOpen(false)} 
+          className="bg-gray-500 text-white px-4 py-2 rounded"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
