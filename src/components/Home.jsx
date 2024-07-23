@@ -26,6 +26,7 @@ function Home({
       setPlace(place);
       setDepth("");
       setSignificance("");
+      setPredictedMagnitude(null);
     }
   }, [place]);
 
