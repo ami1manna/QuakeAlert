@@ -341,7 +341,7 @@ function ResponsePage() {
               </div>
               <ul className="conul">
                 <li>
-                  <h3>Secure Your Home</h3>
+                  <h2>Secure Your Home</h2>
                 </li>
                 <li className="conli">
                   Secure heavy furniture, appliances, and other items to prevent them from falling
@@ -356,7 +356,7 @@ function ResponsePage() {
               </div>
               <ul className="conul">
                 <li>
-                  <h3>Communicate with Loved Ones</h3>
+                  <h2>Communicate with Loved Ones</h2>
                 </li>
                 <li className="conli">
                   Establish a plan to check in with family and friends during an emergency.
@@ -370,7 +370,7 @@ function ResponsePage() {
               </div>
               <ul className="conul">
                 <li>
-                  <h3>Stay Informed</h3>
+                  <h2>Stay Informed</h2>
                 </li>
                 <li className="conli">
                   Monitor local news and emergency alerts for the latest updates and instructions.
@@ -384,7 +384,7 @@ function ResponsePage() {
               </div>
               <ul className="conul">
                 <li>
-                  <h3>Identify Safe Zones</h3>
+                  <h2>Identify Safe Zones</h2>
                 </li>
                 <li className="conli">
                   Locate the nearest emergency shelters and evacuation routes in your area.
