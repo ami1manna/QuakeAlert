@@ -52,7 +52,7 @@ function Home({
   };
 
   return (
-    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div className="bg-white shadow-md rounded px-2 pt-6 pb-8 mb-4 overflow-auto">
       <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -64,7 +64,7 @@ function Home({
         draggable
         theme="dark"
       />
-      <h1 className="text-2xl font-bold mb-4">Earthquake Magnitude Prediction</h1>
+      <h1 className=" font-bold mb-4">Earthquake Magnitude Prediction</h1>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Longitude:

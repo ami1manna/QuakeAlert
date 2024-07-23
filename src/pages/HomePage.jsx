@@ -88,12 +88,12 @@ const HomePage = () => {
 
   return (
     <div className="w-screen h-screen flex">
-      <div className="h-full w-1/6 bg-black p-4">
+      <div className="h-full w-[20%] bg-black p-4">
         <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
           <div className="mb-5">
-            <label htmlFor="place" className="block mb-2 text-sm font-medium text-gray-900">
+            {/* <label htmlFor="place" className="block mb-2 text-sm font-medium text-gray-900">
               Please Enter Place
-            </label>
+            </label> */}
             <input
               type="text"
               id="place"
