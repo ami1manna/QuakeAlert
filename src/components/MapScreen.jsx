@@ -181,7 +181,7 @@ const MapScreen = ({
             </Marker>
           )}
           {error && <p className="text-red-500">{error}</p>}
-          <HeatmapLayerComponent points={points} />
+          <HeatmapLayerComponent points={points} style={{with:'100%', height:'100%'}} />
           <LocationUpdater location={location} />
           <ClickHandler onClick={onMapClick} />
         </LoadingOverlay>
